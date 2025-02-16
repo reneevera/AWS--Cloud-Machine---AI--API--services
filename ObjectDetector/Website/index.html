@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"/>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Object Detector</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<script>function lti_launch( vars, target ) {
+						var query = '';
+						var new_tab = false;
+
+						for(var key in vars) {
+							if(query.length == 0) {
+								query += '?' + key + '=' + encodeURIComponent(vars[key]);
+							}
+							else {
+								query += '&' + key + '=' + encodeURIComponent(vars[key]);
+							}
+						}
+
+						var url = '/d2l/customization/pearsonlti/1079805/Launch' + query;(target == '_blank') ? window.open( url, '_blank' ) : location.replace( url );}</script><script src="/d2l/im/d2lreader/D2LReader_v2.js?rsUrl=https%3a%2f%2fapp.readspeaker.com%2fcgi-bin%2frsent&amp;custId=11151&amp;lang=en_us&amp;listenText=Listen&amp;listenTitle=Listen+to+this+page&amp;mode=unknown&amp;v=20.24.12.20034"></script><script>
+				const allowDetach = true;
+
+				window.rsConf = {
+					general: {
+						usePost: true,
+						shadowDomSelector: '[data-rs-shadow-root], d2l-html-block'
+					},
+					ui: {
+						disableDetachment: !allowDetach,
+						playbackDetach: allowDetach,
+						tools: { detachment: allowDetach }
+					}
+				};
+			</script><script src="https://cdn-na.readspeaker.com/script/11151/webReaderForEducation/brightspace/current/webReader.js?pids=wr&amp;dload=BrightSpace"></script><script src="https://s.brightspace.com/lib/bsi/2024.12.210/unbundled/embeds.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					window.D2L.EmbedRenderer.renderEmbeds(document.body);
+				});</script><script src="https://s.brightspace.com/lib/bsi/2024.12.210/unbundled/mathjax.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+						if (document.querySelector('math') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+							document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+								elm.setAttribute('style', 'display: block; height: 0.5rem;');
+							});
+
+							window.D2L.MathJax.loadMathJax({
+								outputScale: 1.5,
+								renderLatex: false,
+								enableMML3Support: false
+							});
+						}
+					});</script><script src="https://s.brightspace.com/lib/bsi/2024.12.210/unbundled/prism.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script><script src="https://s.brightspace.com/lib/bsi/2024.12.210/unbundled/creator.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', async () => {
+					const activities = [];
+					const practices = [];
+					const allPractices = document.querySelectorAll('.d2l-practice');
+					const elements = document.querySelectorAll('.d2l-element');
+					let layouts = [...document.querySelectorAll('.d2l-cplus-layout')];
+					const tables = document.querySelectorAll('table');
+					const contentStylerStyleLinks = document.querySelectorAll('head > link[href="https://templates.lcs.brightspace.com/lib/assets/css/styles.min.css"]');
+					const contentStylerOverides = document.querySelectorAll('head > link[href^="/d2l/le/contentstyler/"][data-override="override"]');
+
+					layouts = layouts.filter((layout) => layout.closest('.d2l-element.mceNonEditable') === null);
+
+					for (const practice of allPractices) {
+						const activityContainer = practice.hasAttribute('data-d2l-activity-href');
+						if (activityContainer) {
+							activities.push(practice);
+						}
+						else {
+							practices.push(practice);
+						}
+					}
+
+					if (layouts.length > 0) {
+						window.D2L.Creator.convertLayouts(layouts);
+					}
+					if (elements.length > 0) {
+						window.D2L.Creator.convertElements(elements, 1079805, '/content/enforced/1079805-COMP264003_2024W/', 'True');
+					}
+					if (activities.length > 0) {
+						window.D2L.Creator.convertPracticeActivities(activities, 1079805, '/content/enforced/1079805-COMP264003_2024W/');
+					}
+					if (practices.length > 0) {
+						window.D2L.Creator.convertPractices(practices, 1079805, '/content/enforced/1079805-COMP264003_2024W/');
+					}
+					if (contentStylerStyleLinks.length > 0 && contentStylerOverides.length > 0 && tables.length > 0) {
+						window.D2L.Creator.wrapTables(tables);
+					}
+				});</script><script>window.addEventListener('message', function(event) { 
+					if( !event.data ) {
+						return;
+					}
+
+					let params;
+					try {
+						params = JSON.parse( event.data );
+					}
+					catch {
+						return;
+					}
+					if( !params.subject || params.subject !== 'lti.frameResize' ) {
+						return;
+					}
+
+					const MAX_FRAME_HEIGHT = 10000;
+					if( !params.height || params.height < 1 || params.height > MAX_FRAME_HEIGHT ) {
+						console.warn( 'Invalid height value received, aborting' );
+						return;
+					}
+					const el = document.getElementsByTagName( 'iframe' );
+					for ( let i=0; i < el.length; i++ ) {
+						if( el[i].contentWindow === event.source ) {
+							el[i].style.height = params.height + 'px';
+
+							console.info( 'Setting iFrame height to ' + params.height );
+
+							if( el[i].getAttribute('lockwidth') !== 'true'){
+								el[i].style.width = '100%';
+								console.info( 'Setting iFrame width to 100%' );
+							}
+						}
+					}
+				});</script></head>
+
+<body class="w3-theme-14" onload="runDemo()">
+    <div style="min-width:400px">
+        <div class="w3-bar w3-large w3-theme-d4">
+            <span class="w3-bar-item">Object Detector</span>
+        </div>
+
+        <div class="w3-container w3-content">
+            <p class="w3-opacity"><b>Randomly Selected Demo Image</b></p>
+            <div class="w3-panel w3-white w3-card w3-display-container"
+                 style="overflow: hidden">
+                <div style="float: left;">
+                    <img id="image" width="600"/>
+                </div>
+                <div id="objects" style="float: right;">
+                    <h5>Objects Detected:</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js?ou=1079805"></script>
+</body>
+
+</html>
