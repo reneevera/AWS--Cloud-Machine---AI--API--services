@@ -7,7 +7,7 @@ This repository contains two AWS Chalice applications designed to showcase machi
 
 Each application is self-contained with its own capabilities and front-end components, making them easy to deploy and use independently.
 
-## Diagramas y Capturas
+## Diagrams and Screenshots
 
 ![Architecture Diagram](architecture_diagram.png)
 ![Component Interaction Diagram](component_interaction_diagram.png)
