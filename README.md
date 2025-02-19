@@ -9,8 +9,8 @@ Each application is self-contained with its own capabilities and front-end compo
 
 ## Diagramas y Capturas
 
-![Architecture Diagram](architecture diagram.png)
-![Component Interaction Diagram](component interaction diagram.png)
+![Architecture Diagram](architecture_diagram.png)
+![Component Interaction Diagram](component_interaction_diagram.png)
 ![Web Test Head Renee](web_test_head_renee.png)
 
 Author: Renee Vera
