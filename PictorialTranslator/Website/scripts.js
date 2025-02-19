@@ -3,8 +3,13 @@
 const serverUrl = "http://127.0.0.1:8000";
 
 async function uploadImage() {
-    // encode input file as base64 string for upload
     let file = document.getElementById("file").files[0];
+    
+    // Add validation
+    if (!file) {
+        throw new Error("Please select an image file first");
+    }
+
     let converter = new Promise(function(resolve, reject) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -14,10 +19,10 @@ async function uploadImage() {
     });
     let encodedString = await converter;
 
-    // clear file upload input field
+    // Clear file upload input field
     document.getElementById("file").value = "";
 
-    // make server call to upload image
+    // Make server call to upload image
     // and return the server upload promise
     return fetch(serverUrl + "/images", {
         method: "POST",
@@ -46,9 +51,8 @@ function updateImage(image) {
 }
 
 function translateImage(image) {
-    // make server call to translate image
-    // and return the server upload promise
-    return fetch(serverUrl + "/images/" + image["fileId"] + "/translate-text", {
+    // Make server call to translate image and return the server upload promise
+    return fetch(serverUrl + "/images/" + image["fileId"] + "/headlines", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -90,19 +94,65 @@ function playAudio(audioUrl) {
     audio.play();
 }
 
+function getLanguageName(languageCode) {
+    const languageNames = {
+        'es': 'Spanish',
+        'en': 'English',
+        'fr': 'French',
+        'de': 'German',
+        'it': 'Italian',
+        'pt': 'Portuguese',
+        'ru': 'Russian',
+        'ja': 'Japanese',
+        'ko': 'Korean',
+        'zh': 'Chinese',
+        'ar': 'Arabic',
+        'hi': 'Hindi',
+        'auto': 'Auto-detected'
+        // Add more languages as needed
+    };
+    return languageNames[languageCode] || languageCode;
+}
+
 function annotateImage(translations) {
     let translationsElem = document.getElementById("translations");
+    
+    // Update the line count at the beginning
+    document.getElementById("lineCount").textContent = `${translations.length} line${translations.length !== 1 ? 's' : ''}`;
+    
+    // Clear previous translations
     while (translationsElem.firstChild) {
         translationsElem.removeChild(translationsElem.firstChild);
     }
     
+    // Iterate over translations
     for (let i = 0; i < translations.length; i++) {
         let translationContainer = document.createElement("div");
         translationContainer.className = "translation-item";
 
+        // Create container for detected language with label
+        let languageInfo = document.createElement("span");
+        languageInfo.className = "w3-tag w3-small w3-blue-grey";
+        languageInfo.style.marginRight = "10px";
+        let languageLabel = document.createElement("strong");
+        languageLabel.textContent = "Language of the original text: ";
+        languageInfo.appendChild(languageLabel);
+        
+        // Retrieve the language code with fallback logic:
+        let detectedLang = translations[i]["translation"]["detectedSourceLanguage"];
+        if (!detectedLang && translations[i]["translation"]["sourceLanguage"]) {
+            detectedLang = translations[i]["translation"]["sourceLanguage"];
+        }
+        if (!detectedLang) {
+            detectedLang = "auto";
+        }
+        const languageName = getLanguageName(detectedLang);
+        languageInfo.appendChild(document.createTextNode(languageName));
+
         let translationElem = document.createElement("h6");
+        translationElem.appendChild(languageInfo);
         translationElem.appendChild(document.createTextNode(
-            translations[i]["text"] + " -> " + translations[i]["translation"]["translatedText"]
+            translations[i]["text"] + " → " + translations[i]["translation"]["translatedText"]
         ));
 
         let playButton = document.createElement("button");
@@ -122,13 +172,18 @@ function annotateImage(translations) {
 }
 
 function uploadAndTranslate() {
+    // Modify error handling to show friendlier messages
     uploadImage()
         .then(image => updateImage(image))
         .then(image => translateImage(image))
         .then(translations => annotateImage(translations))
         .catch(error => {
-            alert("Error: " + error);
-        })
+            if (error.message === "Please select an image file first") {
+                alert(error.message);
+            } else {
+                alert("Error: " + error);
+            }
+        });
 }
 
 class HttpError extends Error {

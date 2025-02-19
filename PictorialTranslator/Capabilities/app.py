@@ -38,9 +38,9 @@ def upload_image():
     return image_info
 
 
-@app.route('/images/{image_id}/translate-text', methods = ['POST'], cors = True)
+@app.route('/images/{image_id}/headlines', methods = ['POST'], cors = True)
 def translate_image_text(image_id):
-    """detects then translates text in the specified image"""
+    """detects then translates text in the specified image as a single line"""
     request_data = json.loads(app.current_request.raw_body)
     from_lang = request_data['fromLang']
     to_lang = request_data['toLang']
@@ -49,18 +49,22 @@ def translate_image_text(image_id):
 
     text_lines = recognition_service.detect_text(image_id)
 
-    translated_lines = []
-    for line in text_lines:
-        # check confidence
-        if float(line['confidence']) >= MIN_CONFIDENCE:
-            translated_line = translation_service.translate_text(line['text'], from_lang, to_lang)
-            translated_lines.append({
-                'text': line['text'],
-                'translation': translated_line,
-                'boundingBox': line['boundingBox']
-            })
+    # Filter high-confidence lines and join them into one paragraph
+    filtered_texts = [line['text'] for line in text_lines if float(line['confidence']) >= MIN_CONFIDENCE]
+    if not filtered_texts:
+        return []  # No eligible lines
 
-    return translated_lines
+    combined_text = " ".join(filtered_texts)
+
+    # Translate the combined text once
+    translated_result = translation_service.translate_text(combined_text, from_lang, to_lang)
+
+    # Return a single element list with the combined text and its translation
+    return [{
+        'text': combined_text,
+        'translation': translated_result,
+        'boundingBox': None
+    }]
 
 
 @app.route('/text/synthesize', methods=['POST'], cors=True)
